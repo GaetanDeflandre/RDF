@@ -56,3 +56,23 @@ rdfDistances <- function (cont) {
   # Calculer les distances: A MODIFIER !
   rep (0, length (cont))
 }
+
+# Descripteurs de Fourier
+rdfDescFourier <- function (cont) {
+  fft(cont)
+}
+
+# Descripteurs de Fourier normalisés
+rdfDescFourierNormalized <- function (cont) {
+  fft(cont) / length(cont)
+}
+
+# Calcul la transformé
+rdfDescFourierInverse <- function (desc) {
+  fft(fd, TRUE)
+}
+
+# Annule un ratio des descripteurs de Fourier
+rdfAnnuleDescFourier <- function (desc, ratio) {
+
+}

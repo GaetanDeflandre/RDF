@@ -22,9 +22,15 @@ library ("EBImage")
 source ("rdfContours.R")
 
 # Chargement d'un contour
-nom <- "rdf-carre-80.txt"
-cont <- rdfChargeFichierContour (nom)
+nom_ca <- "rdf-carre-80.txt"
+nom_ce <- "rdf-cercle-80.txt"
+cont_ca <- rdfChargeFichierContour (nom_ca)
+cont_ce <- rdfChargeFichierContour (nom_ce)
+
+cont <- cont_ca
 
 # Afficher le contour
-plot (cont, main = nom, type = "o", asp = 1, col = "black",
-      ylim = rev (range (Im (cont))))
+#plot (cont, main = nom, type = "o", asp = 1, col = "red", ylim = rev (range (Im (cont))))
+
+# Descripteur de fourier
+desc <- rdfDescFourierNormalized(cont)
