@@ -22,12 +22,28 @@ library ("EBImage")
 source ("rdfMoments.R")
 
 # Chargement d'une image d'un seul objet
-nom <- "img/rdf-rectangle-diagonal-lisse.png";
+nom <- "rdf-rectangle-diagonal-inverse.png";
 image <- rdfReadGreyImage (nom)
-if (interactive ()) {
-  display (image, nom)
-}
+#if (interactive ()) {
+#  display (image, nom)
+#}
 
-# Calcul de la surface
+print("Barycentre:")
+
 surface <- rdfSurface (image)
+cx <- rdfMoment (image, 1, 0) / surface
+cy <- rdfMoment (image, 0, 1) / surface
+
+print(paste("x:", cx, sep=" "))
+print(paste("y:", cy, sep=" "))
+print("")
+
+print("Tenseur d'inertie:")
+
+tenseur <- rdfTenseurInertie(image)
+print(tenseur)
+print("valeur propres:")
+vvpropres <- eigen(tenseur)
+print(vvpropres$values[1])
+print(vvpropres$values[2])
 

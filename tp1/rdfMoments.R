@@ -52,3 +52,22 @@ rdfMomentCentre <- function (im, p, q) {
   as.numeric (rbind (x) %*% im %*% cbind (y))
 }
 
+# Calcul du tenseur d'inertie
+rdfTenseurInertie <- function (im) { 
+  mu20 <- rdfMomentCentre (im, 2, 0)
+  mu11 <- rdfMomentCentre (im, 1, 1)
+  mu02 <- rdfMomentCentre (im, 0, 2)
+
+  matrix(
+    c(mu20, mu11, mu11, mu02),
+    nrow = 2,
+    ncol = 2,
+    byrow = TRUE
+  )
+}
+
+# Calcul de la matrice d'inertie modifiée
+rdfMatriceInertieModifiee <- function (im) {
+  tenseur <- rdfTenseurInertie (im)
+  
+}
