@@ -1,5 +1,5 @@
 # -----------------------------------------------------------------------
-# Extraction d'attributs de forme,
+# Extraction d'attributs de contours,
 # Module RdF, reconnaissance de formes
 # Copyleft (C) 2014, Universite Lille 1
 #
@@ -19,31 +19,12 @@
 
 # Chargement des fonctions externes
 library ("EBImage")
-source ("rdfMoments.R")
+source ("rdfContours.R")
 
-# Chargement d'une image d'un seul objet
-nom <- "rdf-rectangle-diagonal-inverse.png";
-image <- rdfReadGreyImage (nom)
-#if (interactive ()) {
-#  display (image, nom)
-#}
+# Chargement d'un contour
+nom <- "rdf-carre-80.txt"
+cont <- rdfChargeFichierContour (nom)
 
-print("Barycentre:")
-
-surface <- rdfSurface (image)
-cx <- rdfMoment (image, 1, 0) / surface
-cy <- rdfMoment (image, 0, 1) / surface
-
-print(paste("x:", cx, sep=" "))
-print(paste("y:", cy, sep=" "))
-print("")
-
-print("Tenseur d'inertie:")
-
-tenseur <- rdfTenseurInertie(image)
-print(tenseur)
-print("valeur propres:")
-vvpropres <- eigen(tenseur)
-print(vvpropres$values[1])
-print(vvpropres$values[2])
-
+# Afficher le contour
+plot (cont, main = nom, type = "o", asp = 1, col = "black",
+      ylim = rev (range (Im (cont))))
