@@ -28,9 +28,13 @@ cont_ca <- rdfChargeFichierContour (nom_ca)
 cont_ce <- rdfChargeFichierContour (nom_ce)
 
 cont <- cont_ca
+nom  <- nom_ca
 
 # Afficher le contour
-#plot (cont, main = nom, type = "o", asp = 1, col = "red", ylim = rev (range (Im (cont))))
+plot (cont, main = nom, type = "o", asp = 1, col = "red", ylim = rev (range (Im (cont))))
 
 # Descripteur de fourier
 desc <- rdfDescFourierNormalized(cont)
+descAnn <- rdfAnnuleDescFourier(desc, 0.5)
+contAnn <- rdfDescFourierInverse(descAnn)
+plot (contAnn, main = nom, type = "o", asp = 1, col = "red", ylim = rev (range (Im (contAnn))))

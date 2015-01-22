@@ -69,10 +69,18 @@ rdfDescFourierNormalized <- function (cont) {
 
 # Calcul la transformé
 rdfDescFourierInverse <- function (desc) {
-  fft(fd, TRUE)
+  fft(desc, TRUE)
 }
 
 # Annule un ratio des descripteurs de Fourier
 rdfAnnuleDescFourier <- function (desc, ratio) {
-
+    if(ratio==1){
+        desc
+    } else if(ratio==0) {
+        desc*0
+    } else {
+        l <- length(desc)
+        i <- (ratio*l)
+        c(desc[0:i], desc[(i+1):l]*0)
+    }
 }
