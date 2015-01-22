@@ -22,7 +22,7 @@ library ("EBImage")
 source ("rdfMoments.R")
 
 # Chargement d'une image d'un seul objet
-nom <- "rdf-rectangle-diagonal-inverse.png";
+nom <- "img/rdf-chiffre-4.png";
 image <- rdfReadGreyImage (nom)
 #if (interactive ()) {
 #  display (image, nom)
@@ -42,8 +42,12 @@ print("Tenseur d'inertie:")
 
 tenseur <- rdfTenseurInertie(image)
 print(tenseur)
-print("valeur propres:")
-vvpropres <- eigen(tenseur)
-print(vvpropres$values[1])
-print(vvpropres$values[2])
+print("")
+print("Valeurs propres:")
+print(rdfValeursPropres(tenseur))
+print("")
+print("Vecteurs propres:")
+print(rdfVecteursPropres(tenseur))
+print("Hu")
+rdfMomentsInvariants(image)
 

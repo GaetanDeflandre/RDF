@@ -52,11 +52,22 @@ rdfMomentCentre <- function (im, p, q) {
   as.numeric (rbind (x) %*% im %*% cbind (y))
 }
 
+# Calcul du moment centré normalisé
+rdfMomentCentreNormalise <- function (im, p, q) {
+  mu00 = rdfMomentCentre(im, 0, 0)
+  mupq = rdfMomentCentre(im, p, q)
+  exp = 1+((p+q)/2)
+  
+  mupq / (mu00^exp)
+}
+
+
+
 # Calcul du tenseur d'inertie
 rdfTenseurInertie <- function (im) { 
-  mu20 <- rdfMomentCentre (im, 2, 0)
-  mu11 <- rdfMomentCentre (im, 1, 1)
-  mu02 <- rdfMomentCentre (im, 0, 2)
+  mu20 <- rdfMomentCentreNormalise (im, 2, 0)
+  mu11 <- rdfMomentCentreNormalise (im, 1, 1)
+  mu02 <- rdfMomentCentreNormalise (im, 0, 2)
 
   matrix(
     c(mu20, mu11, mu11, mu02),
@@ -69,5 +80,40 @@ rdfTenseurInertie <- function (im) {
 # Calcul de la matrice d'inertie modifiée
 rdfMatriceInertieModifiee <- function (im) {
   tenseur <- rdfTenseurInertie (im)
-  
 }
+
+# Donne les valeurs propres
+rdfValeursPropres <- function (tenseur) {
+  eigen(tenseur)$values
+}
+
+# Donne les vectors propres
+rdfVecteursPropres <- function (tenseur) {
+  eigen(tenseur)$vectors
+}
+
+# Hu
+rdfMomentsInvariants <- function (im){
+
+  
+  n20 <- rdfMomentCentreNormalise(im,2,0)
+  n02 <- rdfMomentCentreNormalise(im,0,2)
+  n11 <- rdfMomentCentreNormalise(im,1,1)
+  n30 <- rdfMomentCentreNormalise(im,3,0)
+  n12 <- rdfMomentCentreNormalise(im,1,2)
+  n21 <- rdfMomentCentreNormalise(im,2,1)
+  n03 <- rdfMomentCentreNormalise(im,0,3)
+
+  phi1 <- n20+n02
+  phi2 <- (n20-n02)^2+(2*n11)^2
+  phi3 <- (n30-3*n12)^2+(3*n21-n03)^2
+  phi4 <- (n30+n12)^2+(n21+n03)^2
+  phi5 <- (n30-3*n12)*(n30+n12)*((n30+n12)^2-3*(n21+n03)^2)+(3*n21-n03)*(n21+n03)*(3*(n30+n12)^2-(n21+n03)^2)
+
+  print(phi1)
+  print(phi2)
+  print(phi3)
+  print(phi4)
+  print(phi5)
+}
+
