@@ -17,6 +17,17 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 # -----------------------------------------------------------------------
 
+
+# Chargement d'une image en niveaux de gris
+rdfReadGreyImage <- function (nom) {
+  image <- readImage (nom)
+  if (length (dim (image)) == 2) {
+    image
+  } else {
+    channel (image, 'red')
+  }
+}
+
 # Lit un contour dans un fichier texte
 rdfChargeFichierContour <- function (nom) {
   contour <- read.table (nom, )
@@ -27,6 +38,12 @@ rdfChargeFichierContour <- function (nom) {
 rdfContour <- function (image) {
   oc <- ocontour (image)
   complex (real = oc[[1]][,1], imaginary = oc[[1]][,2])
+}
+
+# Charge les contours d'une image binaire en vecteur de contexe
+rdfLoadGreyImagetoComplexeBound <- function (nom) {
+  img <- rdfReadGreyImage(nom)
+  rdfContour(img)
 }
 
 # Algorithme de la corde pour la reduction d'un contour
@@ -53,8 +70,9 @@ rdfDistances <- function (cont) {
   # Points extremes
   debut = head (cont, 1)
   fin = tail (cont, 1)
-  # Calculer les distances: A MODIFIER !
-  rep (0, length (cont))
+  # Calculer les distances
+  abs(Im((cont - debut) * Conj(fin - debut))) / Mod(fin - debut)
+  #rep (0, length (cont))
 }
 
 # Descripteurs de Fourier

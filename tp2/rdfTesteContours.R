@@ -24,11 +24,19 @@ source ("rdfContours.R")
 # Chargement d'un contour
 nom_ca <- "rdf-carre-80.txt"
 nom_ce <- "rdf-cercle-80.txt"
+nom_ratatac <- "rdf-patate.png"
+nom_rec <- "rdf-rectangle-horizontal.png"
+nom_tri <- "rdf-triangle-20.png"
+nom_crx <- "rdf-croix.png"
 cont_ca <- rdfChargeFichierContour (nom_ca)
 cont_ce <- rdfChargeFichierContour (nom_ce)
+cont_ratatac <- rdfLoadGreyImagetoComplexeBound (nom_ratatac)
+cont_rec <- rdfLoadGreyImagetoComplexeBound (nom_rec)
+cont_tri <- rdfLoadGreyImagetoComplexeBound (nom_tri)
+cont_crx <- rdfLoadGreyImagetoComplexeBound (nom_crx)
 
-cont <- cont_ca
-nom  <- nom_ca
+nom  <- nom_crx
+cont <- cont_crx
 
 # Afficher le contour
 plot (cont, main = nom, type = "o", asp = 1, col = "red", ylim = rev (range (Im (cont))))
@@ -37,4 +45,9 @@ plot (cont, main = nom, type = "o", asp = 1, col = "red", ylim = rev (range (Im 
 desc <- rdfDescFourierNormalized(cont)
 descAnn <- rdfAnnuleDescFourier(desc, 0.5)
 contAnn <- rdfDescFourierInverse(descAnn)
-plot (contAnn, main = nom, type = "o", asp = 1, col = "red", ylim = rev (range (Im (contAnn))))
+
+#plot (contAnn, main = nom, type = "o", asp = 1, col = "red", ylim = rev (range (Im (contAnn))))
+
+# Algorithme de la courde
+corde <- rdfAlgorithmeCorde(cont, 0.8)
+plot (corde, main = nom, type = "o", asp = 1, col = "red", ylim = rev (range (Im (corde))))
