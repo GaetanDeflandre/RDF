@@ -1,5 +1,5 @@
 # -----------------------------------------------------------------------
-# Extraction d'attributs de forme,
+# Extraction d'attributs de pixels pour la classification,
 # Module RdF, reconnaissance de formes
 # Copyleft (C) 2014, Universite Lille 1
 #
@@ -19,38 +19,40 @@
 
 # Chargement des fonctions externes
 library ("EBImage")
-source ("rdfMoments.R")
+source ("rdfSegmentation.R")
 
-# Chargement d'une image d'un seul objet
-# rdf-carre-6
-# rdf-rectangle-diagonal
-# rdf-carre-10-30deg
-nom <- "img/rdf-rectangle-diagonal-lisse.png";
+
+# Chargement d'une image
+nom <- "rdf-2-classes-texture-1.png"
+nomref <- "rdf-masque-ronds.png"
 image <- rdfReadGreyImage (nom)
+ref <- rdfReadGreyImage (nomref)
+
+
+# Calcul et affichage de son histogramme
+nbins <- 256
+h <- hist (as.vector (image), breaks = seq (0, 1, 1 / nbins))
+
+# Segmentation par binarisation
+seuil0 <- 0.5
+seuil1 <- 0.6
+seuil2 <- 0.28
+seuil3 <- 0.37
+seuil4 <- 0.39
+seuil <- seuil1
+binaire <- (image - seuil) >= 0
+# image 2 image 3
+#binaire <- (image - seuil) < 0
+
+# Affichage des deux images
 #if (interactive ()) {
 #  display (image, nom)
+#  display (binaire, "image binaire")
 #}
 
-print("Barycentre:")
+#imgerr <- xor(binaire, ref)
+imgerr <- binaire != ref
 
-surface <- rdfSurface (image)
-cx <- rdfMoment (image, 1, 0) / surface
-cy <- rdfMoment (image, 0, 1) / surface
-
-print(paste("x:", cx, sep=" "))
-print(paste("y:", cy, sep=" "))
-print("")
-
-print("Tenseur d'inertie:")
-
-tenseur <- rdfTenseurInertie(image)
-print(tenseur)
-print("")
-print("Valeurs propres:")
-print(rdfValeursPropres(tenseur))
-print("")
-print("Vecteurs propres:")
-print(rdfVecteursPropres(tenseur))
-print("Hu")
-rdfMomentsInvariants(image)
-
+if (interactive ()) {
+  display (imgerr, "image binaire")
+}
