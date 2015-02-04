@@ -62,3 +62,12 @@ rdfCalculeHistogramme2D <- function (image1, bins1, image2, bins2) {
   # normalise pour maximum a 1
   as.Image (h2d / max (h2d))
 }
+
+imageErreur <- function(image1, image2){
+    #xor(binaire, ref)
+    image1 != image2
+}
+
+pourcentageErreur <-function(imgerr){
+    (sum(imgerr)*100)/length(imgerr)
+}

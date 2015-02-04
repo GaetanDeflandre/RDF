@@ -23,36 +23,51 @@ source ("rdfSegmentation.R")
 
 
 # Chargement d'une image
-nom <- "rdf-2-classes-texture-1.png"
+nom <- "rdf-2-classes-texture-0.png"
 nomref <- "rdf-masque-ronds.png"
 image <- rdfReadGreyImage (nom)
 ref <- rdfReadGreyImage (nomref)
 
+o = rdfTextureEcartType(image, 2)
+
+
 
 # Calcul et affichage de son histogramme
 nbins <- 256
-h <- hist (as.vector (image), breaks = seq (0, 1, 1 / nbins))
+#h <- hist (as.vector (image), breaks = seq (0, 1, 1 / nbins))
+h <- hist (as.vector (o), breaks = seq (0, 1, 1 / nbins))
 
 # Segmentation par binarisation
 seuil0 <- 0.5
 seuil1 <- 0.6
 seuil2 <- 0.28
 seuil3 <- 0.37
-seuil4 <- 0.39
-seuil <- seuil1
+seuil4 <- 0.41
+seuil <- seuil0
 binaire <- (image - seuil) >= 0
 # image 2 image 3
 #binaire <- (image - seuil) < 0
 
+
 # Affichage des deux images
-#if (interactive ()) {
+if (interactive ()) {
 #  display (image, nom)
 #  display (binaire, "image binaire")
-#}
+}
 
-#imgerr <- xor(binaire, ref)
-imgerr <- binaire != ref
+
+imgerr <- imageErreur(binaire, ref)
+tauxerr <- pourcentageErreur(imgerr)
+
+print(tauxerr)
+# taux img 0: 0.1159668
+# taux img 1: 1.11084
+# taux img 2: 15.29541
+# taux img 3: 21.89941
+# taux img 4: 49.21265
+
+
 
 if (interactive ()) {
-  display (imgerr, "image binaire")
+  #display (imgerr, "image binaire")
 }
