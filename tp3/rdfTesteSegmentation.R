@@ -23,36 +23,49 @@ source ("rdfSegmentation.R")
 
 
 # Chargement d'une image
-nom <- "rdf-2-classes-texture-1.png"
+nom <- "rdf-2-classes-texture-4.png"
 nomref <- "rdf-masque-ronds.png"
 image <- rdfReadGreyImage (nom)
 ref <- rdfReadGreyImage (nomref)
 
+o <- rdfTextureEcartType(image, 2)
+
+#if (interactive ()) {
+#  display (o, "image ecart type")
+#}
 
 # Calcul et affichage de son histogramme
 nbins <- 256
-h <- hist (as.vector (image), breaks = seq (0, 1, 1 / nbins))
+#h <- hist (as.vector (o), breaks = seq (0, 1, 1 / nbins))
 
 # Segmentation par binarisation
-seuil0 <- 0.5
-seuil1 <- 0.6
-seuil2 <- 0.28
-seuil3 <- 0.37
-seuil4 <- 0.39
-seuil <- seuil1
+# avec hist niveau de gris
+seuil0g <- 0.5
+seuil1g <- 0.58
+seuil2g <- 0.39
+seuil3g <- 0.42
+seuil4g <- 0.5
+# avec hist niveau de texture
+seuil0t <- 0.5
+seuil1t <- 0.32
+seuil2t <- 0.42
+seuil3t <- 0.36
+seuil4t <- 0.35
+
+seuil <- seuil4t
 binaire <- (image - seuil) >= 0
 # image 2 image 3
 #binaire <- (image - seuil) < 0
 
 # Affichage des deux images
-#if (interactive ()) {
+if (interactive ()) {
 #  display (image, nom)
-#  display (binaire, "image binaire")
-#}
+  display (binaire, "image binaire")
+}
 
 #imgerr <- xor(binaire, ref)
 imgerr <- binaire != ref
 
-if (interactive ()) {
-  display (imgerr, "image binaire")
-}
+#if (interactive ()) {
+#  display (imgerr, "image erreur")
+#}
