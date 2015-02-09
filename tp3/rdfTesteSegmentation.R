@@ -23,20 +23,27 @@ source ("rdfSegmentation.R")
 
 
 # Chargement d'une image
-nom <- "rdf-2-classes-texture-4.png"
+nom <- "rdf-2-classes-texture-0.png"
 nomref <- "rdf-masque-ronds.png"
 image <- rdfReadGreyImage (nom)
 ref <- rdfReadGreyImage (nomref)
 
 o <- rdfTextureEcartType(image, 2)
 
-#if (interactive ()) {
+if (interactive ()) {
 #  display (o, "image ecart type")
-#}
+}
 
 # Calcul et affichage de son histogramme
 nbins <- 256
 #h <- hist (as.vector (o), breaks = seq (0, 1, 1 / nbins))
+
+# histogramme 2D
+h2d <- rdfCalculeHistogramme2D(image, nbins, o, nbins);
+if (interactive ()) {
+#  display (h2d, "histogramme 2D")
+}
+
 
 # Segmentation par binarisation
 # avec hist niveau de gris
@@ -52,9 +59,9 @@ seuil2t <- 0.42
 seuil3t <- 0.36
 seuil4t <- 0.35
 
-seuil <- seuil4t
+seuil <- 0.4
 binaire <- (image - seuil) >= 0
-# image 2 image 3
+# gris2 girs3 tex1 tex2 tex3 tex4
 #binaire <- (image - seuil) < 0
 
 # Affichage des deux images
@@ -65,6 +72,11 @@ if (interactive ()) {
 
 #imgerr <- xor(binaire, ref)
 imgerr <- binaire != ref
+sumerr <- sum(imgerr)
+len <- length(image)
+
+taux <- (sumerr*100)/len
+print(taux)
 
 #if (interactive ()) {
 #  display (imgerr, "image erreur")
