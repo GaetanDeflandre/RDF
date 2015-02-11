@@ -71,3 +71,9 @@ imageErreur <- function(image1, image2){
 pourcentageErreur <-function(imgerr){
     (sum(imgerr)*100)/length(imgerr)
 }
+
+# TP 5
+rdfProbabilite <-function(omegaSize, imageSize){
+    omegaSize / imageSize
+}
+
