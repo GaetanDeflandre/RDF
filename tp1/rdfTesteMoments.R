@@ -22,10 +22,23 @@ library ("EBImage")
 source ("rdfMoments.R")
 
 # Chargement d'une image d'un seul objet
-# rdf-carre-6
-# rdf-rectangle-diagonal
-# rdf-carre-10-30deg
-nom <- "img/rdf-rectangle-diagonal-lisse.png";
+<<<<<<< HEAD
+#rdf-carre-6.png
+#rdf-carre-10.png
+#rdf-carre-10-30deg.png
+#rdf-carre-10-45deg.png
+#rdf-rectangle-horizontal.png
+#rdf-rectangle-vertical.png
+#rdf-rectangle-diagonal-lisse.png
+#rdf-rectangle-diagonal.png
+#rdf-triangle-10.png
+#rdf-triangle-10-15deg.png
+#rdf-triangle-10-45deg.png
+#rdf-chiffre-0.png
+#rdf-chiffre-1.png
+#rdf-chiffre-2.png
+#rdf-chiffre-3.png
+nom <- "img/rdf-rectangle-diagonal.png";
 image <- rdfReadGreyImage (nom)
 #if (interactive ()) {
 #  display (image, nom)

@@ -23,11 +23,16 @@ source ("rdfSegmentation.R")
 
 
 # Chargement d'une image
+<<<<<<< HEAD
 nom <- "rdf-2-classes-texture-0.png"
+=======
+nom <- "rdf-2-classes-texture-2.png"
+>>>>>>> 247647dd05bf763c8b92b85151534f294cb6058f
 nomref <- "rdf-masque-ronds.png"
 image <- rdfReadGreyImage (nom)
 ref <- rdfReadGreyImage (nomref)
 
+<<<<<<< HEAD
 o = rdfTextureEcartType(image, 2)
 
 
@@ -47,11 +52,76 @@ seuil <- seuil0
 binaire <- (image - seuil) >= 0
 # image 2 image 3
 #binaire <- (image - seuil) < 0
+=======
+o <- rdfTextureEcartType(image, 2)
+
+if (interactive ()) {
+#  display (o, "image ecart type")
+}
+
+# Calcul et affichage de son histogramme
+nbins <- 256
+#h <- hist (as.vector (o), breaks = seq (0, 1, 1 / nbins))
+
+# histogramme 2D
+h2d <- rdfCalculeHistogramme2D(image, nbins, o, nbins);
+if (interactive ()) {
+#  display (h2d, "histogramme 2D")
+}
+
+# z(x,y) = a*x + b*y +c
+# image 0 -> meilleur solution hist gris
+#z = 1*image + 0*o
+# image 1 -> meilleur solution hist gris
+#z = 1*image + 0*o
+# image 2 -> meilleur solution équation
+z = 1*image + 1*o
+# image 3 -> meilleur solution texture
+#z = 0*image + 1*o
+# image 4 -> meilleur solution texture
+#z = 0*image + 1*o
+
+# Normaliser
+z = z / max(z)
+
+if (interactive ()) {
+  display (z, "équation")
+}
+
+h <- hist (as.vector (z), breaks = seq (0, 1, 1 / nbins))
+
+# Segmentation par binarisation
+# avec hist niveau de gris
+seuil0g <- 0.5
+seuil1g <- 0.58
+seuil2g <- 0.39
+seuil3g <- 0.42
+seuil4g <- 0.5
+# avec hist niveau de texture
+seuil0t <- 0.5
+seuil1t <- 0.32
+seuil2t <- 0.42
+seuil3t <- 0.36
+seuil4t <- 0.35
+
+# histogramme seuil équation
+seuil0e <- 0.5
+seuil1e <- 0.58
+seuil2e <- 0.43
+seuil3e <- 0.36
+seuil4e <- 0.35
+
+seuil <- seuil2e
+#binaire <- (z - seuil) >= 0
+# gris2 girs3 tex1 tex2 tex3 tex4 eq2
+binaire <- (z - seuil) < 0
+>>>>>>> 247647dd05bf763c8b92b85151534f294cb6058f
 
 
 # Affichage des deux images
 if (interactive ()) {
 #  display (image, nom)
+<<<<<<< HEAD
 #  display (binaire, "image binaire")
 }
 
@@ -71,3 +141,19 @@ print(tauxerr)
 if (interactive ()) {
   #display (imgerr, "image binaire")
 }
+=======
+  display (binaire, "image binaire")
+}
+
+#imgerr <- xor(binaire, ref)
+imgerr <- binaire != ref
+sumerr <- sum(imgerr)
+len <- length(image)
+
+taux <- (sumerr*100)/len
+print(taux)
+
+#if (interactive ()) {
+#  display (imgerr, "image erreur")
+#}
+>>>>>>> 247647dd05bf763c8b92b85151534f294cb6058f
