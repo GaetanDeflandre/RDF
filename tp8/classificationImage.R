@@ -65,7 +65,7 @@ c2 <- km$center[2,]
 
 # Distances pts centres
 dc1 <- sqrt( (points[,1]- c1[1])*(points[,1]- c1[1]) + (points[,2]- c1[2])*(points[,2]- c1[2]))
-dc2 <- sqrt( (points[,1]- c1[1])*(points[,1]- c1[1]) + (points[,2]- c1[2])*(points[,2]- c1[2]))
+dc2 <- sqrt( (points[,1]- c2[1])*(points[,1]- c2[1]) + (points[,2]- c2[2])*(points[,2]- c2[2]))
 
 imgbin <- dc1 > dc2
 imgbin <- matrix(imgbin,ncol=128)
