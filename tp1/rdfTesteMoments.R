@@ -22,7 +22,6 @@ library ("EBImage")
 source ("rdfMoments.R")
 
 # Chargement d'une image d'un seul objet
-<<<<<<< HEAD
 #rdf-carre-6.png
 #rdf-carre-10.png
 #rdf-carre-10-30deg.png
