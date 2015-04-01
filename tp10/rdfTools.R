@@ -1,3 +1,7 @@
+# ------------------------------------------------------
+# Ce fichier contient les fonctions utile pour le tp 10.
+# ------------------------------------------------------
+
 # Chargement d'une image en niveaux de gris
 rdfReadGreyImage <- function (nom) {
     image <- readImage (nom)
@@ -37,7 +41,7 @@ readUSPSdata <- function( folder ) {
 
 	# read the image files 
 	for ( i in 0:9 ) {
-		file <- sprintf( "%s/usps_%d.jpg", folder, i );
+		file <- sprintf( "%s/usps_%d.png", folder, i );
 		image <- rdfReadGreyImage( file );
 		image <- t( imageData( image ) );
 		images <- splitImageArray( image, 34, 33, 16, 16 );
@@ -48,3 +52,8 @@ readUSPSdata <- function( folder ) {
 
 	return ( list(data, labels) );
 }
+
+computeProbPixBelongToClass <- function( data3D, labels, nnumber, napp ){
+    
+}
+

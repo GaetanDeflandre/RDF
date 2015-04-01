@@ -16,33 +16,21 @@ source ("rdfTools.R")
 # heigth: 16px
 # -----------------------------------------------
 
-# abind
 
-filename <- "usps/usps_0.jpg"
 
-image <- rdfReadGreyImage(filename)
-image <- t( imageData( image ) );
-
-#if (interactive ()) {
-#    display (image, filename)
-#}
-
-rows <- 34
-cols <- 33
 nnumber <- 1100
 
-# longeur des chiffres (largeur et hauteur identique)
-numlen <- 16
+# largeur et hauteur d'une image d'un chiffre
+width <- 16
+heigth <- 16
 
-#for(x in 1:cols){
-#    for(y in 1:raws){
-#        curx = 
-#    }
-#}
-
+# lecture des images binaires
 output <- readUSPSdata("usps")
 
-data <- output[1]
-labels <- output[2]
+data <- output[[1]]
+labels <- output[[2]]
 
-images <- splitImageArray( image, 34, 33, 16, 16 )
+# la moitié des données sont d'apprentissage
+napp <- 1100/2
+
+
