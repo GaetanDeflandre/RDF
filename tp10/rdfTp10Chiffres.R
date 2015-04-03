@@ -33,4 +33,6 @@ labels <- output[[2]]
 # la moitié des données sont d'apprentissage
 napp <- 1100/2
 
+pc <- probabilityPixelOfClass(data, labels, nnumber, napp)
+
 

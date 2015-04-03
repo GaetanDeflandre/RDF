@@ -53,7 +53,23 @@ readUSPSdata <- function( folder ) {
 	return ( list(data, labels) );
 }
 
-computeProbPixBelongToClass <- function( data3D, labels, nnumber, napp ){
-    
+probabilityPixelOfClass <- function( data3D, labels, nnumber, napp ){
+    pc <- array(, dim=c(16, 16, 0) );
+
+    # pour chaque classe
+    for ( c in 0:9 ) {
+        csum <- matrix(rep(0, 16*16), nrow=16,ncol=16, byrow=TRUE)
+
+        # pour chaque image de la classe, dans le nombre pour l'apprentissage 
+        for ( i in 1:napp ){
+            imgID <- (c * nnumber) + i
+            csum <- csum + data3D[,,imgID]
+        }
+
+        csum <- csum / napp
+        pc <- abind( pc, csum, along=3 )
+    }
+
+    return ( pc )
 }
 
